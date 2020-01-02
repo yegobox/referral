@@ -17,6 +17,7 @@ class ReferralModelObserver
      */
     public function created($user)
     {
+        Log::debug("debugCode:".request()->get('referral_code'));
         $model = ReferralCode::where('code',request()->get('referral_code'))->first();
         if($model){
             $referral =  Referral::where('owner_id',$model->owner_id)->first();
