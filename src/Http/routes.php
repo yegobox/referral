@@ -17,7 +17,7 @@ Route::get('generate_referral_code',function (){
     return env('APP_URL').'/'.config('referral.registration_end_point').'?referral_code='.$result->code;
 });
 Route::get('referrals',function(){
-    return \Yegobox\Referral\Models\Referral::where('owner_id',1)->first();
+    return \Yegobox\Referral\Models\Referral::where('owner_id',Auth::id())->first();
 });
 Route::post('emails',function(){
    $arr = explode(",",request()->get('emails'));
@@ -26,7 +26,7 @@ Route::post('emails',function(){
     if(!in_array($single,$clean_arr)){
         $clean_arr[]= $single;
         //Auth::id()
-        $model =\Yegobox\Referral\Models\ReferralCode::where('owner_id',1)->first();
+        $model =\Yegobox\Referral\Models\ReferralCode::where('owner_id',Auth::id())->first();
 
         Log::debug($single);
         // if(EM)
