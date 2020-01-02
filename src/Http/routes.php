@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use \Yegobox\Referral\Mail\ReferralMail;
+
 Route::get('generate_referral_code',function (){
     $model =\Yegobox\Referral\Models\ReferralCode::where('owner_id',Auth::id())->first();
     if($model){
@@ -14,8 +17,20 @@ Route::get('generate_referral_code',function (){
     return env('APP_URL').'/'.config('referral.registration_end_point').'?referral_code='.$result->code;
 });
 Route::get('referrals',function(){
-    return \Yegobox\Referral\Models\Referral::where('owner_id',1)->get();
+    return \Yegobox\Referral\Models\Referral::where('owner_id',1)->first();
 });
 Route::post('emails',function(){
-   //request()->all()
+   $arr = explode(",",request()->get('emails'));
+   $clean_arr=[];
+   foreach($arr as $single){
+    if(!in_array($single,$clean_arr)){
+        $clean_arr[]= $single;
+        //Auth::id()
+        $model =\Yegobox\Referral\Models\ReferralCode::where('owner_id',1)->first();
+
+        Log::debug($single);
+        // if(EM)
+        Mail::to($single)->send(new ReferralMail(config('referral.registration_end_point').'?referral_code='.$model->code));
+    }
+   }
 });

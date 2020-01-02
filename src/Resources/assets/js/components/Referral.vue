@@ -51,12 +51,10 @@
             //get URL to use to load the code to share
             handleOk(){
                 axios.post("/emails", {
-                    emails: this.emails
+                    emails: this.emails.join(',')
                 }).then(response => {
-                    console.log(response);
                 })
                 .catch(error => {
-                   console.log("got error");
                 });
             },
             getCodeUrl(){
@@ -84,14 +82,17 @@
                 } catch (err) {
                     alert('Oops, unable to copy');
                 }
+                
 
                 /* unselect the range */
                 testingCodeToCopy.setAttribute('type', 'hidden')
                 window.getSelection().removeAllRanges()
             },
              onTagAdded(slug) {
-                this.emails.push(slug.value);
-                console.log(slug.value);
+                 if(!this.emails.find(s=>s.value == slug.value)){
+                      this.emails.push(slug.value);
+                 }
+               
             },
 
             onTagRemoved(slug) {
