@@ -16,7 +16,7 @@ class ReferralCode extends Migration
         Schema::create('referral_codes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('owner_id')->nullable()->unsigned();
-            $table->foreign('owner_id')->references('id')->on(config('referral.tablename'))->onDelete('set null');
+            // $table->foreign('owner_id')->references('id')->on(config('referral.tablename'))->onDelete('set null');
 
             $table->bigInteger('code');
             $table->timestamps();
