@@ -1,0 +1,26 @@
+{
+    "name": "yegobox/referral",
+    "license": "MIT",
+    "description" : "A Package to provide a referral to your customer",
+    "authors": [
+        {
+            "name": "Muragijimana Richard",
+            "email": "richard@yegobox.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Yegobox\\Referral\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yegobox\\Referral\\Providers\\ReferralServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}

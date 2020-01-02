@@ -1,0 +1,21 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+Route::get('generate_referral_code',function (){
+    $model =\Yegobox\Referral\Models\ReferralCode::where('owner_id',Auth::id())->first();
+    if($model){
+        return env('APP_URL').'/'.config('referral.registration_end_point').'?referral_code='.$model->code;
+    }
+   $result = \Yegobox\Referral\Models\ReferralCode::create([
+       'code'=>random_int(1000,5000)+ rand(10,20), //can be imploved!
+       'owner_id'=>Auth::id()
+   ]) ;
+
+    return env('APP_URL').'/'.config('referral.registration_end_point').'?referral_code='.$result->code;
+});
+Route::get('referrals',function(){
+    return \Yegobox\Referral\Models\Referral::where('owner_id',1)->get();
+});
+Route::post('emails',function(){
+   //request()->all()
+});
