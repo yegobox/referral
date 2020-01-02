@@ -16,7 +16,7 @@ class Referrals extends Migration
         Schema::create('referrals', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('owner_id')->nullable()->unsigned();
-            $table->foreign('owner_id')->references(config('referral.tablename'))->onDelete('set null');
+            // $table->foreign('owner_id')->references(config('referral.tablename'))->onDelete('set null');
 
             $table->decimal('amount_earned',8,2)->default(0);
             $table->bigInteger('point_earned')->default(0);
