@@ -8,14 +8,14 @@ Route::get('generate_referral_code',function (){
 
     $model =\Yegobox\Referral\Models\ReferralCode::where('owner_id',request()->user()->id)->first();
     if($model){
-        return env('APP_URL').'/'.config('referral.registration_end_point').'?referral_code='.$model->code;
+        return env('APP_URL').'/'.config('referral.registration_end_point').'&referral_code='.$model->code;
     }
    $result = \Yegobox\Referral\Models\ReferralCode::create([
        'code'=>random_int(1000,5000)+ rand(10,20), //can be imploved!
        'owner_id'=>request()->user()->id
    ]) ;
 
-    return env('APP_URL').'/'.config('referral.registration_end_point').'?referral_code='.$result->code;
+    return env('APP_URL').'/'.config('referral.registration_end_point').'&referral_code='.$result->code;
 })->middleware('web');
 Route::get('referrals',function(){
     return \Yegobox\Referral\Models\Referral::where('owner_id',request()->user()->id)->first();
@@ -28,7 +28,7 @@ Route::post('emails',function(){
         $clean_arr[]= $single;
         $model =\Yegobox\Referral\Models\ReferralCode::where('owner_id',request()->user()->id)->first();
         if(filter_var($single,FILTER_VALIDATE_EMAIL)){
-            Mail::to($single)->send(new ReferralMail(config('referral.registration_end_point').'?referral_code='.$model->code));
+            Mail::to($single)->send(new ReferralMail(config('referral.registration_end_point').'&referral_code='.$model->code));
         }
     }
    }
