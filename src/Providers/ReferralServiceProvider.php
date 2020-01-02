@@ -32,10 +32,10 @@ class ReferralServiceProvider extends ServiceProvider
 
         $router->aliasMiddleware('locale', Locale::class);
 
-        $model = config('referral.model');
-
-        $model::observe(ReferralModelObserver::class);
-        
+        if(config()->has('referral.model')){
+            $model = config('referral.model');
+            $model::observe(ReferralModelObserver::class);
+        }
     }
 
     /**
